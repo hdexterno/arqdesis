@@ -1,24 +1,14 @@
 package model;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.io.Serializable;
 
-public class Usuario {
+public class Usuario implements Serializable {
+    private static final long serialVersionUID = 1L;
 	private int id;
-	private String nome, cpf, usuario, senha, endereco, telefoneResidencial, telefoneCelular, acessoLivre, autorizado, tipoUsuario, periodo;
-	
-	static{
-		try{
-			Class.forName("com.mysql.jdbc.Driver");
-		} catch(ClassNotFoundException e){
-			throw new RuntimeException(e);
-		}
-	}
-	
-	public Usuario(){
+	private String nome, cpf, usuario, senha, endereco, telefoneResidencial, telefoneCelular, acessoLivre, autorizado,
+			tipoUsuario, periodo;
+
+	public Usuario() {
 		this.id = -1;
 		this.nome = null;
 		this.cpf = null;
@@ -33,8 +23,9 @@ public class Usuario {
 		this.periodo = null;
 	}
 
-	public Usuario(int id, String nome, String cpf, String usuario, String senha, String endereco, String telefoneResidencial,
-			String telefoneCelular, String acessoLivre, String autorizado, String tipoUsuario, String periodo) {
+	public Usuario(int id, String nome, String cpf, String usuario, String senha, String endereco,
+			String telefoneResidencial, String telefoneCelular, String acessoLivre, String autorizado,
+			String tipoUsuario, String periodo) {
 		this.id = id;
 		this.nome = nome;
 		this.cpf = cpf;
@@ -145,121 +136,6 @@ public class Usuario {
 		this.autorizado = autorizado;
 	}
 
-	//Obtém conexão com o banco de dados
-	public Connection obtemConexao() throws SQLException {
-		return DriverManager.getConnection("jdbc:mysql://localhost/arqdesis_entrega?user=alunos&password=alunos");
-	}
-	
-	public void criar(){
-		String sqlInsert = "INSERT INTO usuario(nome, cpf, usuario, senha, endereco, telefone_residencial, telefone_celular, acessoLivre, autorizado, tipoUsuario, periodo) values(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
-	//usando o try with resources do Java 7, que fecha o que abriu
-	try(Connection conn = obtemConexao();
-			PreparedStatement stm = conn.prepareStatement(sqlInsert)){
-		stm.setString(1, getNome());
-		stm.setString(2, getCpf());
-		stm.setString(3, getUsuario());
-		stm.setString(4, getSenha());
-		stm.setString(5, getEndereco());
-		stm.setString(6, getTelefoneResidencial());
-		stm.setString(7, getTelefoneCelular());
-		stm.setString(8, getAcessoLivre());
-		stm.setString(9, getisAutorizado());
-		stm.setString(10, getTipoUsuario());
-		stm.setString(11, getPeriodo());
-		stm.execute();
-		
-		String sqlQuery  = "SELECT LAST_INSERT_ID()";
-		try(PreparedStatement stm2 = conn.prepareStatement(sqlQuery);
-			ResultSet rs = stm2.executeQuery();) {
-			if(rs.next()){
-				setId(rs.getInt(1));
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		
-	} catch(SQLException e){
-		e.printStackTrace();
-	}
-	}
-	
-	public void atualizar(){
-		String sqlUpdate = "UPDATE usuario SET nome=?, cpf=?, usuario=?, senha=?, endereco=?, telefone_residencial=?, telefone_celular=?,"
-				+ "acessoLivre=?, autorizado=?, tipoUsuario=?, periodo=? WHERE id=?";
-		//usando o try with resources do Java 7, que fecha o que abriu
-		try(Connection conn = obtemConexao();
-				PreparedStatement stm = conn.prepareStatement(sqlUpdate)){
-			stm.setString(1, getNome());
-			stm.setString(2, getCpf());
-			stm.setString(3, getUsuario());
-			stm.setString(4, getSenha());
-			stm.setString(5, getEndereco());
-			stm.setString(6, getTelefoneResidencial());
-			stm.setString(7, getTelefoneCelular());
-			stm.setString(8, getAcessoLivre());
-			stm.setString(9, getisAutorizado());
-			stm.setString(10, getTipoUsuario());
-			stm.setString(11, getPeriodo());
-			stm.setInt(12, getId());
-			stm.execute();
-		} catch(SQLException e){
-			e.printStackTrace();
-		}
-	}
-	
-	public void excluir(){
-		String sqlDelete = "DELETE FROM usuario WHERE id = ?";
-		//usando o try with resources do Java 7, que fecha o que abriu
-		try(Connection conn = obtemConexao();
-				PreparedStatement stm = conn.prepareStatement(sqlDelete)){
-			stm.setInt(1, getId());
-			stm.execute();
-		}catch(SQLException e){
-			e.printStackTrace();
-		}
-	}
-	
-	public void carregar(){
-		String sqlSelect = "SELECT * FROM usuario WHERE id = ?";
-		//usando o try with resources do Java 7, que fecha o que abriu
-		try(Connection conn = obtemConexao();
-				PreparedStatement stm = conn.prepareStatement(sqlSelect)){
-			stm.setInt(1, getId());
-			try(ResultSet rs = stm.executeQuery()){
-				if(rs.next()){
-					setNome(rs.getString("nome"));
-					setCpf(rs.getString("cpf"));
-					setUsuario(rs.getString("usuario"));
-					setSenha(rs.getString("senha"));
-					setEndereco(rs.getString("endereco"));
-					setTelefoneResidencial(rs.getString("telefone_residencial"));
-					setTelefoneCelular(rs.getString("telefone_celular"));
-					setAcessoLivre(rs.getString("acessoLivre"));
-					setAutorizado(rs.getString("autorizado"));
-					setTipoUsuario(rs.getString("tipoUsuario"));
-					setPeriodo(rs.getString("periodo"));
-				} else{
-					setId(-1);
-					setNome(null);
-					setCpf(null);
-					setUsuario(null);
-					setSenha(null);
-					setEndereco(null);
-					setTelefoneResidencial(null);
-					setTelefoneCelular(null);
-					setAcessoLivre(null);
-					setAutorizado(null);
-					setTipoUsuario(null);
-					setPeriodo(null);
-				}
-			} catch(SQLException e){
-				e.printStackTrace();
-			}
-		} catch(SQLException e1){
-			System.out.println(e1.getStackTrace());
-		}
-	}
-	
 	@Override
 	public String toString() {
 		return "Usuario [id=" + id + ", nome=" + nome + ", cpf=" + cpf + ", usuario=" + usuario + ", senha=" + senha

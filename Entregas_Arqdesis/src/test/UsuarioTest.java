@@ -1,16 +1,19 @@
 package test;
 
 import static org.junit.Assert.assertEquals;
+
 import org.junit.Before;
 import org.junit.FixMethodOrder;
 import org.junit.Test;
 import org.junit.runners.MethodSorters;
 
 import model.Usuario;
+import service.UsuarioService;
 
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class UsuarioTest {
 	Usuario usuario, copia;
+	UsuarioService usuarioService;
 	static int id = 0;
 	
 	/*
@@ -26,8 +29,33 @@ public class UsuarioTest {
 	@Before
 	public void setUp() throws Exception {
 		System.out.println("setup");
-		usuario = new Usuario(id, "Rayza Silva", "88381952263", "rs883", "1234", "Rua das Amoras", "11 988256786", "11 28908736", "1", "1", "1", "t");
-		copia = new Usuario(id, "Rayza Silva", "88381952263", "rs883", "1234", "Rua das Amoras", "11 988256786", "11 28908736", "1", "1", "1", "t");
+		usuario = new Usuario();
+		usuario.setId(id);
+		usuario.setNome("Rayza Silva");
+		usuario.setCpf("88381952263");
+		usuario.setUsuario("rs883");
+		usuario.setSenha("1234");
+		usuario.setEndereco("Rua das Amoras, 88");
+		usuario.setTelefoneResidencial("11 28908736");
+		usuario.setTelefoneCelular("11 988256786");
+		usuario.setAcessoLivre("1");
+		usuario.setAutorizado("1");
+		usuario.setTipoUsuario("1");
+		usuario.setPeriodo("t");
+		copia = new Usuario();
+		copia.setId(id);
+		copia.setNome("Rayza Silva");
+		copia.setCpf("88381952263");
+		copia.setUsuario("rs883");
+		copia.setSenha("1234");
+		copia.setEndereco("Rua das Amoras, 88");
+		copia.setTelefoneResidencial("11 28908736");
+		copia.setTelefoneCelular("11 988256786");
+		copia.setAcessoLivre("1");
+		copia.setAutorizado("1");
+		copia.setTipoUsuario("1");
+		copia.setPeriodo("t");
+		usuarioService = new UsuarioService();
 		System.out.println(usuario);
 		System.out.println(copia);
 		System.out.println(id);
@@ -37,17 +65,29 @@ public class UsuarioTest {
 	public void test00Carregar() {
 		System.out.println("carregar");
 		//Para funcionar, o cliente 1 deve ter sido carregado no banco por fora
-		Usuario fixture = new Usuario(1, "Fernanda Chaves", "35641078520", "35641078520", "fer356", "Rua dos Virginianos, 09", "11 24578910", "11 975410236", "1", "1", "2", "n");
-		Usuario novo = new Usuario(1, null, null, null, null, null, null, null, null, null, null, null);
-		novo.carregar();
+		Usuario fixture = new Usuario();
+		fixture.setId(1);
+		fixture.setNome("Fernanda Chaves");
+		fixture.setCpf("35641078520");
+		fixture.setUsuario("35641078520");
+		fixture.setSenha("fer356");
+		fixture.setEndereco("Rua dos Virginianos, 09");
+		fixture.setTelefoneResidencial("11 24578910");
+		fixture.setTelefoneCelular("11 975410236");
+		fixture.setAcessoLivre("1");
+		fixture.setAutorizado("1");
+		fixture.setTipoUsuario("2");
+		fixture.setPeriodo("n");
+		UsuarioService novoService = new UsuarioService();
+		Usuario novo = novoService.carregar(1);
 		assertEquals("testa inclusao", novo, fixture);
 	}
 	
 	@Test
 	public void test01Criar() {
 		System.out.println("criar");
-		usuario.criar();
-		id = usuario.getId();
+		id = usuarioService.criar(usuario);
+		System.out.println(id);
 		copia.setId(id);
 		assertEquals("testa criacao", usuario, copia);
 	}
@@ -57,8 +97,8 @@ public class UsuarioTest {
 		System.out.println("atualizar");
 		usuario.setTelefoneCelular("11 99999999");
 		copia.setTelefoneCelular("11 99999999");
-		usuario.atualizar();
-		usuario.carregar();
+		usuarioService.atualizar(usuario);
+		usuario = usuarioService.carregar(usuario.getId());
 		assertEquals("testa atualizacao", usuario, copia);
 	}
 
@@ -77,8 +117,8 @@ public class UsuarioTest {
 		copia.setAutorizado(null);
 		copia.setTipoUsuario(null);
 		copia.setPeriodo(null);
-		usuario.excluir();
-		usuario.carregar();
+		usuarioService.excluir(id);
+		usuario = usuarioService.carregar(id);
 		assertEquals("testa exclusao", usuario, copia);
 	}
 }
