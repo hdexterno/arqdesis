@@ -2,7 +2,7 @@
     <wb-module deploy-name="Entregas_Arqdesis">
         <wb-resource deploy-path="/" source-path="/WebContent" tag="defaultRootSource"/>
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/src"/>
-        <property name="context-root" value="Entrega_02"/>
         <property name="java-output-path" value="/Entregas_Arqdesis/build/classes"/>
+        <property name="context-root" value="Entregas_Arqdesis"/>
     </wb-module>
 </project-modules>
