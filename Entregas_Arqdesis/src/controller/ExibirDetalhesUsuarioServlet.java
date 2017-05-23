@@ -31,6 +31,13 @@ public class ExibirDetalhesUsuarioServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		doPost(request, response);
+	}
+
+	/**
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 */
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		int idUsuario = Integer.parseInt(request.getParameter("id_selecionado"));
 		UsuarioService service = new UsuarioService();
 		Usuario usuario = service.carregar(idUsuario);
@@ -39,13 +46,4 @@ public class ExibirDetalhesUsuarioServlet extends HttpServlet {
 		RequestDispatcher rd = request.getRequestDispatcher("ExibirDetalheUsuario.jsp");
 		rd.forward(request, response);
 	}
-
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
-	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		doGet(request, response);
-	}
-
 }

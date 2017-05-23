@@ -1,64 +1,111 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<!DOCTYPE html>
+<html lang="pt-br">
 
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Novo Cadastro</title>
+
+<link href="css/bootstrap.min.css" rel="stylesheet">
+<link href="css/style.css" rel="stylesheet">
 </head>
+
 <body>
-	<form action="CadastrarUsuario">
-		<label for="nome">Nome</label>
-		<input type="text" id="nome" name="nome" />
-		<br /><br />
-		<label for="cpf">CPF</label>
-		<input type="text" id="cpf" name="cpf" />
-		<br/><br />
-		<label for="usuario">Usuário</label>
-		<input type="text" id="usuario" name="usuario" />
-		<br /><br />
-		<label for="senha">Senha</label>
-		<input type="text" id="senha" name="senha" />
-		<br /><br />
-		<label for="endereco">Endereço</label>
-		<input type="text" id="endereco" name="endereco" />
-		<br /><br />
-		<label for="telefoneResidencial">Telefone Residencial</label>
-		<input type="text" id="telefoneResidencial" name="telefoneResidencial" />
-		<br /><br />
-		<label for="telefoneCelular">Telefone Celular</label>
-		<input type="text" id="telefoneCelular" name="telefoneCelular" />
-		<br /><br />
-		<label for="acessoLivre">Acesso Livre</label>
-		<select id="acessoLivreOp" name="acessoLivre">
-			<option value="0">Não</option>
-			<option value="1">Sim</option>
-		</select>
-		<br /><br /> 
-		<label for=autorizado>Autorizado</label>
-		<select name="autorizado">
-			<option value="0">Não</option>
-			<option value="1">Sim</option>
-		</select>
-		<br /><br />
-		<label for="tipoUsuario">Tipo de Usuário</label>
-		<select name="tipoUsuario">
-			<option value="1">1</option>
-			<option value="2">2</option>
-			<option value="3">3</option>
-		</select>
-		<br /><br />
-		<label for="periodo">Período</label>
-		<select name="periodo">
-			<option value="m">Manhã</option>
-			<option value="t">Tarde</option>
-			<option value="n">Noite</option>
-		</select>
-		<br />
-		<br />
-		<input type="submit" value="Cadastrar" />
-	</form>
+	<!-- Barra superior com os menus de navegacao -->
+	<c:import url="Menu.jsp" />
+	<!-- Container Principal -->
+	<div id="main" class="container">
+		<h3 class="page-header">Cadastrar Usuário</h3>
+		<!-- Formulario para inclusao de clientes -->
+		<form action="CadastrarUsuario" method="post">
+			<!-- area de campos do form -->
+			<div class="row">
+				<div class="form-group col-md-12">
+					<label for="nome">Nome</label>
+						<input type="text" class="form-control" name="nome" id="nome" required maxlength="60" placeholder="nome completo">
+				</div>
+			</div>
+			
+			<div class="row">
+				<div class="form-group col-md-6">
+					<label for="fone">CPF</label>
+						<input type="text" class="form-control" name="cpf" id="cpf" maxlength="15" required placeholder="CPF obrigatório">
+				</div>
+
+				<div class="form-group col-md-6">
+					<label for="usuario">Usuário</label>
+					<input type="text" class="form-control" name="usuario" id="usuario" required maxlength="11" placeholder="usuário obrigatório">
+				</div>
+
+				<div class="form-group col-md-12">
+					<label for="senha">Senha</label>
+					<input type="password" class="form-control" name="senha" id="senha" required maxlength="6" placeholder="senha obrigatória">
+				</div>
+
+				<div class="form-group col-md-12">
+					<label for="endereco">Endereço</label>
+					<input type="text" class="form-control" name="endereco" id="endereco" required maxlength="150" placeholder="Logradouro, nome, número">
+				</div>
+
+				<div class="form-group col-md-12">
+					<label for="nome">Telefone Residencial</label>
+					<input type="text" class="form-control" name="telefoneResidencial" id="telefoneResidencial" required maxlength=15	placeholder="DDD + número">
+				</div>
+
+				<div class="form-group col-md-12">
+					<label for="nome">Telefone Celular</label>
+					<input type="text" class="form-control" name="telefoneCelular" id="telefoneCelular" required maxlength=15 placeholder="DDD + número">
+				</div>
+
+				<div class="form group col-md-12">
+					<label for="acessoLivre">Acesso Livre</label>
+					<select id="acessoLivreOp" name="acessoLivre">
+						<option value="0">Não</option>
+						<option value="1">Sim</option>
+					</select>
+				</div>
+
+				<div class="form group col-md-12">
+					<label for=autorizado>Autorizado</label>
+					<select name="autorizado">
+						<option value="0">Não</option>
+						<option value="1">Sim</option>
+					</select>
+				</div>
+
+				<div class="form group col-md-12">
+					<label for="tipoUsuario">Tipo de Usuário</label>
+					<select	name="tipoUsuario">
+						<option value="1">1</option>
+						<option value="2">2</option>
+						<option value="3">3</option>
+					</select>
+				</div>
+
+				<div class="form group col-md-12">
+					<label for="periodo">Período</label>
+					<select name="periodo">
+						<option value="m">Manhã</option>
+						<option value="t">Tarde</option>
+						<option value="n">Noite</option>
+					</select>
+				</div>
+			</div>
+			<hr />
+			<div id="actions" class="row">
+				<div class="col-md-12">
+					<button type="submit" class="btn btn-primary" name="acao" value="Criar">Salvar</button>
+					<button type="reset" class="btn btn-default">Limpar</button>
+					<a href="index.jsp" class="btn btn-default">Cancelar</a>
+				</div>
+			</div>
+		</form>
+	</div>
+	<script src="js/jquery.min.js"></script>
+	<script src="js/bootstrap.min.js"></script>
 </body>
 </html>

@@ -47,17 +47,16 @@ public class UsuarioDAO {
 		// usando o try with resources do Java 7, que fecha o que abriu
 		try (Connection conn = ConnectionFactory.obtemConexao(); PreparedStatement stm = conn.prepareStatement(sqlUpdate)) {
 			stm.setString(1, usuario.getNome());
-			stm.setString(2, usuario.getCpf());
-			stm.setString(3, usuario.getUsuario());
-			stm.setString(4, usuario.getSenha());
-			stm.setString(5, usuario.getEndereco());
-			stm.setString(6, usuario.getTelefoneResidencial());
-			stm.setString(7, usuario.getTelefoneCelular());
-			stm.setString(8, usuario.getAcessoLivre());
-			stm.setString(9, usuario.getAutorizado());
-			stm.setString(10, usuario.getTipoUsuario());
-			stm.setString(11, usuario.getPeriodo());
-			stm.setInt(12, usuario.getId());
+			stm.setString(2, usuario.getUsuario());
+			stm.setString(3, usuario.getSenha());
+			stm.setString(4, usuario.getEndereco());
+			stm.setString(5, usuario.getTelefoneResidencial());
+			stm.setString(6, usuario.getTelefoneCelular());
+			stm.setString(7, usuario.getAcessoLivre());
+			stm.setString(8, usuario.getAutorizado());
+			stm.setString(9, usuario.getTipoUsuario());
+			stm.setString(10, usuario.getPeriodo());
+			stm.setInt(11, usuario.getId());
 			stm.execute();
 		} catch (SQLException e) {
 			e.printStackTrace();

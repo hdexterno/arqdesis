@@ -31,7 +31,14 @@ public class AtualizarDadosUsuarioServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		int id = Integer.parseInt(request.getParameter("id"));
+		doPost(request, response);
+	}
+
+	/**
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 */
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		int id = Integer.parseInt(request.getParameter("id_selecionado"));
 		String pNome = request.getParameter("nome");
 		String pCpf = request.getParameter("cpf");
 		String pUsuario = request.getParameter("usuario");
@@ -43,21 +50,25 @@ public class AtualizarDadosUsuarioServlet extends HttpServlet {
 		String pAutorizado = request.getParameter("autorizado");
 		String pTipoUsuario = request.getParameter("tipoUsuario");
 		String pPeriodo = request.getParameter("periodo");
-		Usuario usuario = new Usuario(pNome, pCpf, pUsuario, pSenha, pEndereco, pTelefoneResidencial, pTelefoneCelular, pAcessoLivre, pAutorizado, pTipoUsuario, pPeriodo);
+		Usuario usuario = new Usuario();
 		usuario.setId(id);
+		usuario.setNome(pNome);
+		usuario.setCpf(pCpf);
+		usuario.setUsuario(pUsuario);
+		usuario.setSenha(pSenha);
+		usuario.setEndereco(pEndereco);
+		usuario.setTelefoneResidencial(pTelefoneResidencial);
+		usuario.setTelefoneCelular(pTelefoneCelular);
+		usuario.setAcessoLivre(pAcessoLivre);
+		usuario.setAutorizado(pAutorizado);
+		usuario.setTipoUsuario(pTipoUsuario);
+		usuario.setPeriodo(pPeriodo);
 		UsuarioService service = new UsuarioService();
 		service.atualizar(usuario);
 		request.setAttribute("usuario", usuario);
-		RequestDispatcher rd = request.getRequestDispatcher("AlterarDadosUsuario.jsp");
+		request.setAttribute("id", id);
+		RequestDispatcher rd = request.getRequestDispatcher("ExibirDetalhesUsuario");
 		rd.forward(request, response);
-	}
-
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
-	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		doGet(request, response);
 	}
 
 }
