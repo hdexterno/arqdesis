@@ -15,6 +15,6 @@ public class ConnectionFactory {
 	
 	//Obtém conexão com o banco de dados
 	public static Connection obtemConexao() throws SQLException{
-		return DriverManager.getConnection("jdbc:mysql://localhost/arqdesis_entrega?user=alunos&password=alunos");
+		return DriverManager.getConnection("jdbc:mysql://localhost:3306/arqdesis_entrega?user=alunos&password=alunos");
 	}
 }

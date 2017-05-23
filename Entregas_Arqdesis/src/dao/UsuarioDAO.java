@@ -4,11 +4,13 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.LinkedList;
+import java.util.List;
 
 import model.Usuario;
 
 public class UsuarioDAO {
-	public int criar(Usuario usuario) {
+	public Usuario criar(Usuario usuario) {
 		String sqlInsert = "INSERT INTO usuario(nome, cpf, usuario, senha, endereco, telefone_residencial, telefone_celular, acessoLivre, autorizado, tipoUsuario, periodo) values(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 		// usando o try with resources do Java 7, que fecha o que abriu
 		try (Connection conn = ConnectionFactory.obtemConexao(); PreparedStatement stm = conn.prepareStatement(sqlInsert)) {
@@ -20,7 +22,7 @@ public class UsuarioDAO {
 			stm.setString(6, usuario.getTelefoneResidencial());
 			stm.setString(7, usuario.getTelefoneCelular());
 			stm.setString(8, usuario.getAcessoLivre());
-			stm.setString(9, usuario.getisAutorizado());
+			stm.setString(9, usuario.getAutorizado());
 			stm.setString(10, usuario.getTipoUsuario());
 			stm.setString(11, usuario.getPeriodo());
 			stm.execute();
@@ -36,11 +38,11 @@ public class UsuarioDAO {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		return usuario.getId();
+		return usuario;
 	}
 	
-	public void atualizar(Usuario usuario) {
-		String sqlUpdate = "UPDATE usuario SET nome=?, cpf=?, usuario=?, senha=?, endereco=?, telefone_residencial=?, telefone_celular=?,"
+	public Usuario atualizar(Usuario usuario) {
+		String sqlUpdate = "UPDATE usuario SET nome=?, usuario=?, senha=?, endereco=?, telefone_residencial=?, telefone_celular=?,"
 				+ "acessoLivre=?, autorizado=?, tipoUsuario=?, periodo=? WHERE id=?";
 		// usando o try with resources do Java 7, que fecha o que abriu
 		try (Connection conn = ConnectionFactory.obtemConexao(); PreparedStatement stm = conn.prepareStatement(sqlUpdate)) {
@@ -52,7 +54,7 @@ public class UsuarioDAO {
 			stm.setString(6, usuario.getTelefoneResidencial());
 			stm.setString(7, usuario.getTelefoneCelular());
 			stm.setString(8, usuario.getAcessoLivre());
-			stm.setString(9, usuario.getisAutorizado());
+			stm.setString(9, usuario.getAutorizado());
 			stm.setString(10, usuario.getTipoUsuario());
 			stm.setString(11, usuario.getPeriodo());
 			stm.setInt(12, usuario.getId());
@@ -60,6 +62,7 @@ public class UsuarioDAO {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
+		return usuario;
 	}
 
 	public void excluir(int id) {
@@ -116,5 +119,18 @@ public class UsuarioDAO {
 			System.out.print(e1.getStackTrace());
 		}
 		return usuario;
+	}
+
+	public List<Usuario> listarUsuarios() throws SQLException {
+		List<Usuario> usuarios = new LinkedList<Usuario>();
+		String sql = "SELECT * FROM USUARIO";
+		try(Connection conn = ConnectionFactory.obtemConexao();
+				PreparedStatement ps = conn.prepareStatement(sql);
+				ResultSet rs = ps.executeQuery()){
+			while(rs.next()){
+				usuarios.add(new Usuario (rs.getInt("ID"), rs.getString("NOME"), rs.getString("CPF")));
+			}
+		}
+		return usuarios;
 	}
 }

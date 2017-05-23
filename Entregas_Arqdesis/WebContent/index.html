@@ -2,37 +2,14 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Cadastro de Usuário</title>
+<title>Controle de Usuários</title>
 </head>
 <body>
-	<h3>Cadastro de Usuários</h3>
-	<form action="ManterUsuario.do" method="get">
-		Nome: <input type="text" name="nome"><br/><br/>
-		CPF: <input type="text" name="cpf"><br/><br/>
-		Usuário: <input type="text" name="usuario"><br/><br/>
-		Senha: <input type="text" name="senha"><br/><br/>
-		Endereço: <input type="text" name="endereco"><br/><br/>
-		Telefone Residencial: <input type="text" name="telefoneResidencial"><br/><br/>
-		Telefone Celular: <input type="text" name="telefoneCelular"><br/><br/>
-		Acesso Livre: <select name="acessoLivre">
-			<option value="0">Não</option>
-			<option value="1">Sim</option>
-		</select><br/><br/>
-		Autorizado: <select name="autorizado">
-			<option value="0">Não</option>
-			<option value="1">Sim</option>
-		</select><br/><br/>
-		Tipo Usuário: <select name="tipoUsuario">
-			<option value="1">1</option>
-			<option value="2">2</option>
-			<option value="3">3</option>
-		</select><br/><br/>
-		Período: <select name="periodo">
-			<option value="m">Manhã</option>
-			<option value="t">Tarde</option>
-			<option value="n">Noite</option>
-		</select><br/><br/>
-		<input type="submit" value="Enviar Dados">
-	</form>
+	<h3>Escolha uma opção:</h3>
+	<br />
+	<br />
+	<a href="NovoCadastro.jsp">Cadastrar novo usuário</a>
+	<br />
+	<a href="ConsultarUsuarios">Consultar usuário existente</a>
 </body>
 </html>

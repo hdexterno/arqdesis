@@ -23,10 +23,9 @@ public class Usuario implements Serializable {
 		this.periodo = null;
 	}
 
-	public Usuario(int id, String nome, String cpf, String usuario, String senha, String endereco,
+	public Usuario(String nome, String cpf, String usuario, String senha, String endereco,
 			String telefoneResidencial, String telefoneCelular, String acessoLivre, String autorizado,
 			String tipoUsuario, String periodo) {
-		this.id = id;
 		this.nome = nome;
 		this.cpf = cpf;
 		this.usuario = usuario;
@@ -38,6 +37,12 @@ public class Usuario implements Serializable {
 		this.autorizado = autorizado;
 		this.tipoUsuario = tipoUsuario;
 		this.periodo = periodo;
+	}
+
+	public Usuario(int id, String nome, String cpf) {
+		this.id = id;
+		this.nome = nome;
+		this.cpf = cpf;
 	}
 
 	public int getId() {
@@ -128,7 +133,7 @@ public class Usuario implements Serializable {
 		this.acessoLivre = acessoLivre;
 	}
 
-	public String getisAutorizado() {
+	public String getAutorizado() {
 		return autorizado;
 	}
 

@@ -1,4 +1,4 @@
-package controller;
+package D;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -88,7 +88,7 @@ public class ManterUsuarioController extends HttpServlet {
 		out.println(	"telefone residencial: "+usuario.getTelefoneResidencial()+"<br>");
 		out.println(	"telefone celular: "+usuario.getTelefoneCelular()+"<br>");
 		out.println(	"acesso livre: "+usuario.getAcessoLivre()+"<br>");
-		out.println(	"autorizado: "+usuario.getisAutorizado()+"<br>");
+		out.println(	"autorizado: "+usuario.getAutorizado()+"<br>");
 		out.println(	"tipo usuario: "+usuario.getTipoUsuario()+"<br>");
 		out.println(	"periodo: "+usuario.getPeriodo()+"<br>");
 	    out.println("</body></html>");
